@@ -1,6 +1,11 @@
 'use client';
 import React from 'react';
-import { ChevronDown, ChevronRight, GraduationCap, X } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronRight,
+  GraduationCap,
+  X,
+} from 'lucide-react';
 import { navigationItems } from './SidebarNavItems';
 
 interface SidebarProps {
@@ -40,7 +45,10 @@ const Sidebar: React.FC<SidebarProps> = ({
             <GraduationCap className="w-6 h-6 text-white" />
             <h1 className="text-lg font-bold">Dashboard</h1>
           </div>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden absolute top-4 right-4 text-white">
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden absolute top-4 right-4 text-white"
+          >
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -65,6 +73,12 @@ const Sidebar: React.FC<SidebarProps> = ({
               <div key={item.id}>
                 <button
                   onClick={() => {
+                    if (item.id === 'logout') {
+                      localStorage.removeItem('isAuthenticated');
+                      window.location.href = '/login';
+                      return;
+                    }
+
                     if (item.id === 'teacher') {
                       toggleTeacherExpanded();
                     } else {
@@ -73,7 +87,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                     }
                   }}
                   className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
-                    activeNav === item.id
+                    item.id === 'logout'
+                      ? 'text-red-400 hover:bg-red-500 hover:text-white'
+                      : activeNav === item.id
                       ? 'bg-slate-600 text-white'
                       : 'text-slate-300 hover:bg-slate-600 hover:text-white'
                   }`}

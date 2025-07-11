@@ -162,12 +162,8 @@ const Departments = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Hover Effect Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
               </div>
-
-              {/* Floating Badge */}
               <div className={`absolute -top-3 -right-3 w-8 h-8 ${dept.bgColor} rounded-full flex items-center justify-center transform rotate-12 group-hover:rotate-0 transition-transform duration-300`}>
                 <div className={`w-3 h-3 ${dept.textColor.replace('text-', 'bg-')} rounded-full`}></div>
               </div>

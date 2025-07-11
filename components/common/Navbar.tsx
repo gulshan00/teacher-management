@@ -63,7 +63,6 @@ const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
                 </div>
                 <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Profile</a>
                 <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                <a href="#" className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Sign Out</a>
               </div>
             )}
           </div>
