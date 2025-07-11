@@ -117,17 +117,18 @@ export default function LoginPage() {
                 'Sign In'
               )}
             </button>
-          </div>
 
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-600">Protected by end-to-end encryption</p>
+            <button
+              onClick={() => router.push('/')}
+              className="w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-100 transition-all duration-200"
+            >
+              Continue without login
+            </button>
           </div>
-        </div>
-
-        <div className="text-center mt-6">
-          <p className="text-sm text-gray-500">Having trouble signing in? Contact support</p>
         </div>
       </div>
     </div>
   );
 }
+
+
