@@ -1,11 +1,11 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mail, Shield, Lock } from 'lucide-react';
+import { Mail, Phone, Shield } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -21,19 +21,15 @@ export default function LoginPage() {
     setIsLoading(true);
     setError('');
 
-    // Trim inputs
-    const trimmedEmail = email.trim();
-    const trimmedPassword = password.trim();
-
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    if (trimmedEmail === 'admin@gmail.com' && trimmedPassword === '123456') {
+    if (email === 'admin@gmail.com' && phone === '7894561230') {
       localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('userEmail', trimmedEmail);
+      localStorage.setItem('userEmail', email);
       setError('');
-      router.push('/');
+      router.push('/'); 
     } else {
-      setError('Invalid email or password. Please check your credentials.');
+      setError('Invalid email or phone number. Please check your credentials.');
     }
 
     setIsLoading(false);
@@ -47,6 +43,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4 relative">
+      {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full opacity-20 blur-3xl"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-indigo-200 to-pink-200 rounded-full opacity-20 blur-3xl"></div>
@@ -71,7 +68,7 @@ export default function LoginPage() {
           <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded-r-lg">
             <p className="text-blue-700 text-sm font-medium mb-1">Demo Credentials:</p>
             <p className="text-blue-600 text-xs">Email: admin@gmail.com</p>
-            <p className="text-blue-600 text-xs">Password: 123456</p>
+            <p className="text-blue-600 text-xs">Phone: 7894561230</p>
           </div>
 
           <div className="space-y-6">
@@ -91,14 +88,14 @@ export default function LoginPage() {
             </div>
 
             <div className="relative">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   onKeyDown={handleKeyPress}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-500"
                 />
@@ -132,3 +129,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+
