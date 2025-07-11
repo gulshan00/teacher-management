@@ -1,12 +1,6 @@
 'use client';
-import React, { useState } from 'react';
-import {
-  ChevronDown,
-  ChevronRight,
-  GraduationCap,
-  Menu,
-  X,
-} from 'lucide-react';
+import React from 'react';
+import { ChevronDown, ChevronRight, GraduationCap, X } from 'lucide-react';
 import { navigationItems } from './SidebarNavItems';
 
 interface SidebarProps {
@@ -14,6 +8,8 @@ interface SidebarProps {
   setActiveNav: (id: string) => void;
   isTeacherExpanded: boolean;
   toggleTeacherExpanded: () => void;
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -21,29 +17,35 @@ const Sidebar: React.FC<SidebarProps> = ({
   setActiveNav,
   isTeacherExpanded,
   toggleTeacherExpanded,
+  sidebarOpen,
+  setSidebarOpen,
 }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <>
-      {/* Mobile Toggle Button */}
-      <div className="lg:hidden p-4 bg-slate-800 text-white flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <GraduationCap className="w-6 h-6 text-white" />
-          <h1 className="text-lg font-bold">Dashboard</h1>
-        </div>
-        <button onClick={() => setSidebarOpen(!sidebarOpen)}>
-          {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-      {/* Sidebar Panel */}
       <div
-        className={`${
-          sidebarOpen ? 'block' : 'hidden'
-        } lg:block fixed lg:static z-50 top-0 left-0 h-full w-64 bg-slate-700 text-white flex flex-col transition-all`}
+        className={`fixed z-50 top-0 left-0 h-full w-64 bg-slate-700 text-white flex flex-col transition-transform transform
+          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          lg:translate-x-0 lg:static lg:block`}
       >
-        {/* Header / Logo */}
+        {/* Mobile Header */}
+        <div className="p-6 border-b border-slate-600 flex justify-between items-center lg:hidden">
+          <div className="flex items-center space-x-3">
+            <GraduationCap className="w-6 h-6 text-white" />
+            <h1 className="text-lg font-bold">Dashboard</h1>
+          </div>
+          <button onClick={() => setSidebarOpen(false)} className="lg:hidden absolute top-4 right-4 text-white">
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Desktop Header */}
         <div className="p-6 border-b border-slate-600 hidden lg:flex">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
@@ -62,11 +64,14 @@ const Sidebar: React.FC<SidebarProps> = ({
             {navigationItems.map((item) => (
               <div key={item.id}>
                 <button
-                  onClick={() =>
-                    item.id === 'teacher'
-                      ? toggleTeacherExpanded()
-                      : setActiveNav(item.id)
-                  }
+                  onClick={() => {
+                    if (item.id === 'teacher') {
+                      toggleTeacherExpanded();
+                    } else {
+                      setActiveNav(item.id);
+                      setSidebarOpen(false); // Close on small device
+                    }
+                  }}
                   className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
                     activeNav === item.id
                       ? 'bg-slate-600 text-white'
@@ -86,12 +91,16 @@ const Sidebar: React.FC<SidebarProps> = ({
                   )}
                 </button>
 
+                {/* Expanded Teacher Section */}
                 {item.expandable && isTeacherExpanded && (
                   <div className="ml-4 mt-2 space-y-1">
                     {item.children?.map((child) => (
                       <button
                         key={child.id}
-                        onClick={() => setActiveNav(child.id)}
+                        onClick={() => {
+                          setActiveNav(child.id);
+                          setSidebarOpen(false); // Close on small device
+                        }}
                         className={`w-full flex items-center space-x-3 px-4 py-2 rounded-lg text-left transition-colors ${
                           activeNav === child.id
                             ? 'bg-slate-600 text-white'
