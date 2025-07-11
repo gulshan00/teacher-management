@@ -7,6 +7,7 @@ import AddNewTeacher from '@/components/teacher/AddNewTeacher';
 import ActiveTeachers from '@/components/teacher/ActiveTeachers';
 import InactiveTeachers from '@/components/teacher/InactiveTeachers';
 import Departments from '@/components/teacher/Departments';
+import Schedule from '@/components/teacher/Schedule';
 import {
   BarChart3,
   PieChart,
@@ -126,6 +127,8 @@ export default function DashboardPage() {
         return <InactiveTeachers />;
       case 'departments':
         return <Departments />;
+      case 'schedule':
+        return <Schedule />;
       default:
         return <div className="p-6">Page not found.</div>;
     }
