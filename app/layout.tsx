@@ -1,39 +1,5 @@
-// 'use client';
-// import './globals.css';
-// import { useEffect } from 'react';
-// import { useRouter } from 'next/navigation';
-// import { ReactNode } from 'react';
-
-// export default function RootLayout({ children }: { children: ReactNode }) {
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     const isAuthenticated = localStorage.getItem('isAuthenticated');
-//     const currentPath = window.location.pathname;
-
-//     if (!isAuthenticated && currentPath !== '/login') {
-//       router.push('/login');
-//     }
-
-//     if (isAuthenticated && currentPath === '/login') {
-//       router.push('/');
-//     }
-//   }, []);
-
-//   return (
-//     <html lang="en">
-//       <body className="flex">
-//         <main className="flex-1 bg-gray-100 min-h-screen">
-//           {children}
-//         </main>
-//       </body>
-//     </html>
-//   );
-// }
-
-
-
 'use client';
+
 import './globals.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -44,18 +10,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Add a small delay to ensure localStorage is accessible
     const checkAuth = () => {
       try {
         const isAuthenticated = localStorage.getItem('isAuthenticated');
         const currentPath = window.location.pathname;
-        
+
         console.log('Auth check:', { isAuthenticated, currentPath });
-        
-        if (!isAuthenticated && currentPath !== '/login') {
-          router.push('/login');
-        } else if (isAuthenticated === 'true' && currentPath === '/login') {
-          router.push('/');
+
+        if (!isAuthenticated || isAuthenticated === 'false') {
+          if (currentPath !== '/login') {
+            router.push('/login');
+          }
+        } else {
+          if (currentPath === '/login') {
+            router.push('/');
+          }
         }
       } catch (error) {
         console.error('Auth check error:', error);
@@ -64,11 +33,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       }
     };
 
-    // Small delay to ensure client-side hydration
-    setTimeout(checkAuth, 100);
+    setTimeout(checkAuth, 100); // Delay to wait for hydration
   }, [router]);
 
-  // Show loading while checking authentication
   if (isLoading) {
     return (
       <html lang="en">
@@ -84,9 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="flex">
-        <main className="flex-1 bg-gray-100 min-h-screen">
-          {children}
-        </main>
+        <main className="flex-1 bg-gray-100 min-h-screen">{children}</main>
       </body>
     </html>
   );
