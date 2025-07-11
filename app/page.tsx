@@ -5,6 +5,8 @@ import Sidebar from '@/components/common/Sidebar';
 import ViewTeachers from '@/components/teacher/ViewTeachers';
 import AddNewTeacher from '@/components/teacher/AddNewTeacher';
 import ActiveTeachers from '@/components/teacher/ActiveTeachers';
+import InactiveTeachers from '@/components/teacher/InactiveTeachers';
+import Departments from '@/components/teacher/Departments';
 import {
   BarChart3,
   PieChart,
@@ -120,6 +122,10 @@ export default function DashboardPage() {
         return <AddNewTeacher />;
       case 'active-teachers':
         return <ActiveTeachers />;
+      case 'inactive-teachers':
+        return <InactiveTeachers />;
+      case 'departments':
+        return <Departments />;
       default:
         return <div className="p-6">Page not found.</div>;
     }
