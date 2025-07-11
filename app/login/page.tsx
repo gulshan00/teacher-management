@@ -229,13 +229,13 @@
 
 'use client';
 import { useState, useEffect } from 'react';
-import { Mail, Phone, Eye, EyeOff, Shield } from 'lucide-react';
+import { Mail, Phone,  Shield } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   // For demo purposes - in real Next.js app, you'd use: const router = useRouter();
