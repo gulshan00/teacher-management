@@ -8,6 +8,11 @@ A modern, responsive **Teacher Management System** built using **Next.js 13+**, 
 
 👉 [https://teacher-management-2eq7.vercel.app/](https://teacher-management-2eq7.vercel.app/)
 
+## 🎥 Project Walkthrough (Loom Video)
+
+📽️ [Watch Demo on Loom](https://www.loom.com/share/6e8f7bfd8f2f44f78e78be6f03d535a9?sid=07b7ab07-c3ff-4864-a56c-cee5cfb6d491)
+
+
 Use demo credentials to explore the system:
 
 ```bash
