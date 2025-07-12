@@ -7,6 +7,8 @@ import {
   X,
 } from 'lucide-react';
 import { navigationItems } from './SidebarNavItems';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface SidebarProps {
   activeNav: string;
@@ -75,7 +77,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                   onClick={() => {
                     if (item.id === 'logout') {
                       localStorage.removeItem('isAuthenticated');
-                      window.location.href = '/login';
+                      toast.success('You have been logged out.');
+                      setTimeout(() => {
+                        window.location.href = '/login';
+                      }, 1500);
                       return;
                     }
 
@@ -115,7 +120,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         key={child.id}
                         onClick={() => {
                           setActiveNav(child.id);
-                          setSidebarOpen(false); // Close on small device
+                          setSidebarOpen(false); 
                         }}
                         className={`w-full flex items-center space-x-3 px-4 py-2 rounded-lg text-left transition-colors ${
                           activeNav === child.id
