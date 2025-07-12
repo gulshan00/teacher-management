@@ -22,7 +22,7 @@ export default function TeacherSchedule() {
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const times = ['08:00', '09:00', '10:45', '13:00', '14:45', '15:00'];
 
-  const filtered = schedules.filter(s => 
+  const filtered = schedules.filter(s =>
     s.teacher.toLowerCase().includes(search.toLowerCase()) ||
     s.subject.toLowerCase().includes(search.toLowerCase()) ||
     s.class.toLowerCase().includes(search.toLowerCase())
@@ -45,7 +45,7 @@ export default function TeacherSchedule() {
       const totalSlots = days.length * times.length;
       const bookedSlots = teacherSchedules.length;
       const availability = ((totalSlots - bookedSlots) / totalSlots * 100).toFixed(1);
-      
+
       return {
         teacher,
         availability: parseFloat(availability),
@@ -157,7 +157,7 @@ export default function TeacherSchedule() {
               </div>
               <h2 className="text-2xl font-bold text-gray-900">Teacher Availability Analytics</h2>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {getAvailabilityData().map((data, idx) => (
                 <div key={idx} className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
@@ -170,14 +170,14 @@ export default function TeacherSchedule() {
                       <p className="text-sm text-gray-600">{data.booked} scheduled classes</p>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600">Availability</span>
                       <span className="text-sm font-semibold text-gray-900">{data.availability}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-3">
-                      <div 
+                      <div
                         className="bg-gradient-to-r from-green-500 to-emerald-600 h-3 rounded-full transition-all duration-500"
                         style={{ width: `${data.availability}%` }}
                       />
@@ -207,14 +207,14 @@ export default function TeacherSchedule() {
                     <p className="text-blue-600 text-sm font-medium">{schedule.subject}</p>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={() => deleteSchedule(schedule.id)}
                   className="text-gray-400 hover:text-red-500 transition-colors p-1"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
-              
+
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <Users className="w-4 h-4" />
@@ -229,7 +229,7 @@ export default function TeacherSchedule() {
                   <span>Room {schedule.room}</span>
                 </div>
               </div>
-              
+
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium text-white ${getColorByDay(schedule.day)}`}>
                   {schedule.day}
@@ -256,71 +256,77 @@ export default function TeacherSchedule() {
           </div>
         )}
       </div>
-
-      {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-white/20 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900">Add New Schedule</h2>
-              <button 
+              <button
                 onClick={() => setShowModal(false)}
                 className="text-gray-400 hover:text-gray-600"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
-            
+
             <div className="space-y-4">
               <input
-                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black placeholder-gray-500"
                 placeholder="Teacher Name"
                 value={form.teacher}
-                onChange={(e) => setForm({...form, teacher: e.target.value})}
+                onChange={(e) => setForm({ ...form, teacher: e.target.value })}
               />
               <input
-                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black placeholder-gray-500"
                 placeholder="Subject"
                 value={form.subject}
-                onChange={(e) => setForm({...form, subject: e.target.value})}
+                onChange={(e) => setForm({ ...form, subject: e.target.value })}
               />
               <input
-                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black placeholder-gray-500"
                 placeholder="Class"
                 value={form.class}
-                onChange={(e) => setForm({...form, class: e.target.value})}
+                onChange={(e) => setForm({ ...form, class: e.target.value })}
               />
-              <select 
-                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              <select
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
                 value={form.day}
-                onChange={(e) => setForm({...form, day: e.target.value})}
+                onChange={(e) => setForm({ ...form, day: e.target.value })}
               >
-                {days.map(day => <option key={day} value={day}>{day}</option>)}
+                {days.map((day) => (
+                  <option key={day} value={day}>
+                    {day}
+                  </option>
+                ))}
               </select>
-              <select 
-                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              <select
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
                 value={form.time}
-                onChange={(e) => setForm({...form, time: e.target.value})}
+                onChange={(e) => setForm({ ...form, time: e.target.value })}
               >
                 <option value="">Select Time</option>
-                {times.map(time => <option key={time} value={time}>{time}</option>)}
+                {times.map((time) => (
+                  <option key={time} value={time}>
+                    {time}
+                  </option>
+                ))}
               </select>
               <input
-                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black placeholder-gray-500"
                 placeholder="Room"
                 value={form.room}
-                onChange={(e) => setForm({...form, room: e.target.value})}
+                onChange={(e) => setForm({ ...form, room: e.target.value })}
               />
             </div>
-            
+
             <div className="flex gap-3 mt-8">
-              <button 
+              <button
                 onClick={addSchedule}
                 className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium"
               >
                 Add Schedule
               </button>
-              <button 
+              <button
                 onClick={() => setShowModal(false)}
                 className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg hover:bg-gray-200 transition-colors font-medium"
               >
@@ -330,6 +336,7 @@ export default function TeacherSchedule() {
           </div>
         </div>
       )}
+
     </div>
   );
 }

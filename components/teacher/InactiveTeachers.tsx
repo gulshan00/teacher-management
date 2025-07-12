@@ -187,7 +187,7 @@ export default function InactiveTeachers() {
                 placeholder="Search by name, email, or reason..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full border text-black border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
             <div>
@@ -195,7 +195,7 @@ export default function InactiveTeachers() {
               <select
                 value={selectedDepartment}
                 onChange={(e) => setSelectedDepartment(e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full border text-black border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="all">All Departments</option>
                 {departments.map(dept => (
@@ -209,7 +209,7 @@ export default function InactiveTeachers() {
                   setSearchTerm('');
                   setSelectedDepartment('all');
                 }}
-                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                className="w-full bg-gray-100 text-black hover:bg-gray-200  px-4 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 Clear Filters
               </button>

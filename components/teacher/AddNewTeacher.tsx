@@ -186,7 +186,7 @@ const TeacherManagement: React.FC = () => {
               placeholder="Search teachers by name or subject..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 text-black py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -231,10 +231,8 @@ const TeacherManagement: React.FC = () => {
           </div>
         )}
       </div>
-
-      {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white/20 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6 border-b border-gray-200 flex justify-between items-center">
               <h2 className="text-2xl font-bold text-gray-900">Add New Teacher</h2>
@@ -242,7 +240,10 @@ const TeacherManagement: React.FC = () => {
                 <X className="w-6 h-6" />
               </button>
             </div>
+
+            {/* Content */}
             <div className="p-6 space-y-6">
+              {/* Profile Image Upload */}
               <div className="flex items-center space-x-6">
                 <div className="w-24 h-24 border-2 border-dashed border-gray-300 rounded-2xl overflow-hidden flex items-center justify-center bg-gray-50 relative">
                   {teacher.imageURL ? (
@@ -258,22 +259,84 @@ const TeacherManagement: React.FC = () => {
                 </label>
               </div>
 
+              {/* Input Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <InputField icon={<User />} name="name" value={teacher.name} placeholder="Full Name" onChange={handleChange} required />
-                <InputField icon={<Mail />} name="email" value={teacher.email} placeholder="Email" type="email" onChange={handleChange} required />
-                <InputField icon={<Phone />} name="phone" value={teacher.phone} placeholder="Phone" type="tel" onChange={handleChange} required />
-                <InputField icon={<BookOpen />} name="subject" value={teacher.subject} placeholder="Subject" onChange={handleChange} required />
-                <InputField icon={<Briefcase />} name="experience" value={teacher.experience.toString()} placeholder="Experience" type="number" onChange={handleChange} required />
-                <InputField icon={<Award />} name="qualification" value={teacher.qualification} placeholder="Qualification" onChange={handleChange} required />
+                <InputField
+                  icon={<User />}
+                  name="name"
+                  value={teacher.name}
+                  placeholder="Full Name"
+                  onChange={handleChange}
+                  required
+                />
+                <InputField
+                  icon={<Mail />}
+                  name="email"
+                  value={teacher.email}
+                  placeholder="Email"
+                  type="email"
+                  onChange={handleChange}
+                  required
+                />
+                <InputField
+                  icon={<Phone />}
+                  name="phone"
+                  value={teacher.phone}
+                  placeholder="Phone"
+                  type="tel"
+                  onChange={handleChange}
+                  required
+                />
+                <InputField
+                  icon={<BookOpen />}
+                  name="subject"
+                  value={teacher.subject}
+                  placeholder="Subject"
+                  onChange={handleChange}
+                  required
+                />
+                <InputField
+                  icon={<Briefcase />}
+                  name="experience"
+                  value={teacher.experience.toString()}
+                  placeholder="Experience"
+                  type="number"
+                  onChange={handleChange}
+                  required
+                />
+                <InputField
+                  icon={<Award />}
+                  name="qualification"
+                  value={teacher.qualification}
+                  placeholder="Qualification"
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
-              <InputField icon={<MapPin />} name="address" value={teacher.address} placeholder="Address" onChange={handleChange} required />
+              <InputField
+                icon={<MapPin />}
+                name="address"
+                value={teacher.address}
+                placeholder="Address"
+                onChange={handleChange}
+                required
+              />
 
+              {/* Buttons */}
               <div className="flex space-x-4 pt-4">
-                <button type="button" onClick={handleCloseModal} className="flex-1 px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50">
+                <button
+                  type="button"
+                  onClick={handleCloseModal}
+                  className="flex-1 px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50"
+                >
                   Cancel
                 </button>
-                <button type="button" onClick={handleSubmit} className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl">
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl"
+                >
                   Add Teacher
                 </button>
               </div>
@@ -281,6 +344,7 @@ const TeacherManagement: React.FC = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };
@@ -325,7 +389,7 @@ const InputField: React.FC<InputProps> = ({ icon, name, type = 'text', value, pl
       onChange={onChange}
       placeholder={placeholder}
       required={required}
-      className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      className="w-full pl-10 pr-4 py-3 text-black border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
     />
   </div>
 );

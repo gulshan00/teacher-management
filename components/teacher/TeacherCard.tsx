@@ -71,15 +71,6 @@ export default function TeacherCard({
           </div>
         </div>
       </div>
-      
-      {/* Optional badge for additional info */}
-      {/* {teacher.department && (
-        <div className="mt-4 pt-3 border-t border-gray-100">
-          <span className="inline-block bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-medium">
-            {teacher.department}
-          </span>
-        </div>
-      )} */}
     </div>
   )
 }

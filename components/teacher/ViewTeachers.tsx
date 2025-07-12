@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { 
-  Mail, Phone, MapPin, Edit, Trash2, Plus, Search, Star, 
+import {
+  Mail, Phone, MapPin, Edit, Trash2, Plus, Search, Star,
   Users, BookOpen, Award, Clock, X,
 } from 'lucide-react';
 
@@ -135,7 +135,7 @@ export default function ViewTeachers() {
   const [showModal, setShowModal] = useState(false);
   const [editingTeacher, setEditingTeacher] = useState(null);
   const [form, setForm] = useState({
-    name: '', email: '', phone: '', department: '', qualification: '', 
+    name: '', email: '', phone: '', department: '', qualification: '',
     specialization: '', location: '', experience: '', status: 'Available'
   });
 
@@ -144,8 +144,8 @@ export default function ViewTeachers() {
 
   const filteredTeachers = teachers.filter(teacher => {
     const matchesSearch = teacher.name.toLowerCase().includes(search.toLowerCase()) ||
-                         teacher.department.toLowerCase().includes(search.toLowerCase()) ||
-                         teacher.subjects.some(s => s.toLowerCase().includes(search.toLowerCase()));
+      teacher.department.toLowerCase().includes(search.toLowerCase()) ||
+      teacher.subjects.some(s => s.toLowerCase().includes(search.toLowerCase()));
     const matchesFilter = filter === 'All' || teacher.department === filter || teacher.status === filter;
     return matchesSearch && matchesFilter;
   });
@@ -177,7 +177,7 @@ export default function ViewTeachers() {
     setShowModal(false);
     setEditingTeacher(null);
     setForm({
-      name: '', email: '', phone: '', department: '', qualification: '', 
+      name: '', email: '', phone: '', department: '', qualification: '',
       specialization: '', location: '', experience: '', status: 'Available'
     });
   };
@@ -191,7 +191,7 @@ export default function ViewTeachers() {
   };
 
   const getStatusColor = (status) => {
-    switch(status) {
+    switch (status) {
       case 'Available': return 'bg-green-500';
       case 'In Class': return 'bg-blue-500';
       case 'On Leave': return 'bg-red-500';
@@ -223,22 +223,21 @@ export default function ViewTeachers() {
             </button>
           </div>
         </div>
-
         {/* Search and Filters */}
         <div className="bg-white rounded-xl shadow-lg border p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-black w-5 h-5" />
               <input
                 type="text"
                 placeholder="Search teachers, departments, or subjects..."
-                className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-12 pr-4 py-3 border text-black border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
             <select
-              className="px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-4 py-3 border border-gray-200  text-black rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
             >
@@ -391,57 +390,64 @@ export default function ViewTeachers() {
           </div>
         )}
       </div>
-
-      {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 flex items-center justify-center p-4 z-50 bg-transparent backdrop-blur-sm">
+          {/* Ambient floating shadows */}
+          <div className="absolute w-full h-full overflow-hidden z-0">
+            <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-300 rounded-full filter blur-3xl opacity-20 animate-pulse" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-300 rounded-full filter blur-3xl opacity-20 animate-pulse delay-1000" />
+          </div>
+
+          {/* Modal content */}
+          <div className="relative z-10 bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-900">
                   {editingTeacher ? 'Edit Teacher' : 'Add New Teacher'}
                 </h2>
-                <button 
+                <button
                   onClick={() => setShowModal(false)}
                   className="text-gray-400 hover:text-gray-600"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {Object.entries(form).map(([key, value]) => (
                   <div key={key} className={key === 'specialization' ? 'md:col-span-2' : ''}>
                     {key === 'status' ? (
                       <select
-                        className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full p-3 bg-white text-gray-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         value={value}
-                        onChange={(e) => setForm({...form, [key]: e.target.value})}
+                        onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                       >
                         <option value="Available">Available</option>
                         <option value="In Class">In Class</option>
                         <option value="On Leave">On Leave</option>
                       </select>
                     ) : (
+
                       <input
-                        className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full p-3 bg-white text-gray-900 placeholder-gray-500 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder={key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
                         value={value}
-                        onChange={(e) => setForm({...form, [key]: e.target.value})}
+                        onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                       />
+
                     )}
                   </div>
                 ))}
               </div>
-              
+
               <div className="flex gap-3 mt-8">
-                <button 
+                <button
                   onClick={handleSave}
                   className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium"
                 >
                   {editingTeacher ? 'Update Teacher' : 'Add Teacher'}
                 </button>
-                <button 
+                <button
                   onClick={() => setShowModal(false)}
                   className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg hover:bg-gray-200 transition-colors font-medium"
                 >
@@ -452,6 +458,7 @@ export default function ViewTeachers() {
           </div>
         </div>
       )}
+
     </div>
   );
 }
