@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 
 export const navigationItems = [
-  { id: 'home', label: 'Home', icon: Home, href: '#' },
+  { id: 'dashboard', label: 'Dashboard', icon: Home, href: '#' },
   {
     id: 'teacher',
     label: 'Teacher Management',
