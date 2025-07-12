@@ -1,10 +1,10 @@
 'use client';
-
 import './globals.css';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
-
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 export default function RootLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -49,6 +49,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="flex">
         <main className="flex-1 bg-gray-100 min-h-screen">{children}</main>
+         <ToastContainer position="top-right" autoClose={3000} />
       </body>
     </html>
   );

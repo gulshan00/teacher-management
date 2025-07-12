@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, Shield, Lock } from 'lucide-react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -11,7 +13,6 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  // Auto-redirect to home if already authenticated
   useEffect(() => {
     if (localStorage.getItem('isAuthenticated') === 'true') {
       router.replace('/');
@@ -24,20 +25,22 @@ export default function LoginPage() {
 
     if (!trimmedEmail || !trimmedPassword) {
       setError('Email and password are required.');
+      toast.error('Email and password are required.');
       return;
     }
 
     setIsLoading(true);
     setError('');
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     if (trimmedEmail === 'admin@gmail.com' && trimmedPassword === '123456') {
       localStorage.setItem('isAuthenticated', 'true');
       localStorage.setItem('userEmail', trimmedEmail);
+      toast.success('Login successful!');
       router.replace('/');
     } else {
       setError('Invalid email or password. Please check your credentials.');
+      toast.error('Invalid email or password.');
     }
 
     setIsLoading(false);
@@ -132,7 +135,10 @@ export default function LoginPage() {
 
             {/* Continue Without Login */}
             <button
-              onClick={() => router.push('/')}
+              onClick={() => {
+                toast.info('Continuing without login...');
+                router.push('/');
+              }}
               className="w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-100 transition-all duration-200"
             >
               Continue without login

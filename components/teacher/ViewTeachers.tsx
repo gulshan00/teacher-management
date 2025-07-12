@@ -1,9 +1,12 @@
+
 'use client';
 import React, { useState } from 'react';
 import {
   Mail, Phone, MapPin, Edit, Trash2, Plus, Search, Star,
   Users, BookOpen, Award, Clock, X,
 } from 'lucide-react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ViewTeachers() {
   const [teachers, setTeachers] = useState([
@@ -131,7 +134,6 @@ export default function ViewTeachers() {
 
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
-  // const [viewMode, setViewMode] = useState('grid');
   const [showModal, setShowModal] = useState(false);
   const [editingTeacher, setEditingTeacher] = useState(null);
   const [form, setForm] = useState({
@@ -161,35 +163,72 @@ export default function ViewTeachers() {
     setShowModal(true);
   };
 
+  // const handleSave = () => {
+  //   if (editingTeacher) {
+  //     setTeachers(teachers.map(t => t.id === editingTeacher ? { ...t, ...form } : t));
+  //     toast.success('Teacher updated successfully!');
+  //   } else {
+  //     const newTeacher = {
+  //       id: Date.now(),
+  //       ...form,
+  //       subjects: ['New Subject'],
+  //       rating: 4.5,
+  //       students: 0
+  //     };
+  //     setTeachers([...teachers, newTeacher]);
+  //     toast.success('New teacher added!');
+  //   }
+  //   setShowModal(false);
+  //   setEditingTeacher(null);
+  //   setForm({
+  //     name: '', email: '', phone: '', department: '', qualification: '',
+  //     specialization: '', location: '', experience: '', status: 'Available'
+  //   });
+  // };
+
+
+
+
   const handleSave = () => {
-    if (editingTeacher) {
-      setTeachers(teachers.map(t => t.id === editingTeacher ? { ...t, ...form } : t));
-    } else {
-      const newTeacher = {
-        id: Date.now(),
-        ...form,
-        subjects: ['New Subject'],
-        rating: 4.5,
-        students: 0
-      };
-      setTeachers([...teachers, newTeacher]);
-    }
-    setShowModal(false);
-    setEditingTeacher(null);
-    setForm({
-      name: '', email: '', phone: '', department: '', qualification: '',
-      specialization: '', location: '', experience: '', status: 'Available'
-    });
-  };
+  const requiredFields = ['name', 'email', 'phone', 'department', 'qualification', 'specialization', 'location', 'experience', 'status'];
+
+  const isFormValid = requiredFields.every(field => form[field].trim() !== '');
+
+  if (!isFormValid) {
+    toast.error('Please fill in all required fields before submitting.');
+    return;
+  }
+
+  if (editingTeacher) {
+    setTeachers(teachers.map(t => t.id === editingTeacher ? { ...t, ...form } : t));
+    toast.success('Teacher updated successfully!');
+  } else {
+    const newTeacher = {
+      id: Date.now(),
+      ...form,
+      subjects: ['New Subject'],
+      rating: 4.5,
+      students: 0
+    };
+    setTeachers([...teachers, newTeacher]);
+    toast.success('New teacher added!');
+  }
+
+  // Reset and close modal
+  setShowModal(false);
+  setEditingTeacher(null);
+  setForm({
+    name: '', email: '', phone: '', department: '', qualification: '',
+    specialization: '', location: '', experience: '', status: 'Available'
+  });
+};
 
   const handleDelete = (id) => {
     setTeachers(teachers.filter(t => t.id !== id));
+    toast.info('Teacher removed');
   };
 
-  const getInitials = (name) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
-  };
-
+  const getInitials = (name) => name.split(' ').map(n => n[0]).join('').toUpperCase();
   const getStatusColor = (status) => {
     switch (status) {
       case 'Available': return 'bg-green-500';
@@ -201,6 +240,7 @@ export default function ViewTeachers() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6">
+    
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-xl border p-8 mb-8">
@@ -458,7 +498,13 @@ export default function ViewTeachers() {
           </div>
         </div>
       )}
-
+        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick pauseOnFocusLoss draggable pauseOnHover />
+    
     </div>
   );
 }
+
+
+
+
+

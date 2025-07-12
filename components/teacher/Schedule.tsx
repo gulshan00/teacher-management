@@ -1,8 +1,11 @@
-
 'use client';
 
 import React, { useState } from 'react';
-import { Calendar, Clock, Users, Plus, Search, BarChart3, X, BookOpen, MapPin } from 'lucide-react';
+import {
+  Calendar, Clock, Users, Plus, Search, BarChart3, X, BookOpen, MapPin
+} from 'lucide-react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function TeacherSchedule() {
   const [schedules, setSchedules] = useState([
@@ -29,14 +32,28 @@ export default function TeacherSchedule() {
   );
 
   const addSchedule = () => {
-    if (form.teacher && form.subject) {
-      setSchedules([...schedules, { ...form, id: Date.now() }]);
-      setForm({ teacher: '', subject: '', class: '', time: '', day: 'Monday', room: '' });
-      setShowModal(false);
+    const { teacher, subject, class: className, time, room } = form;
+
+    if (!teacher || !subject || !className || !time || !room) {
+      toast.error('All fields are required!');
+      return;
     }
+
+    const newSchedule = {
+      ...form,
+      id: Date.now()
+    };
+
+    setSchedules([...schedules, newSchedule]);
+    setForm({ teacher: '', subject: '', class: '', time: '', day: 'Monday', room: '' });
+    setShowModal(false);
+    toast.success('Schedule added successfully!');
   };
 
-  const deleteSchedule = (id) => setSchedules(schedules.filter(s => s.id !== id));
+  const deleteSchedule = (id: number) => {
+    setSchedules(schedules.filter(s => s.id !== id));
+    toast.success('Schedule deleted!');
+  };
 
   const getAvailabilityData = () => {
     const teachers = [...new Set(schedules.map(s => s.teacher))];
@@ -55,12 +72,12 @@ export default function TeacherSchedule() {
     });
   };
 
-  const getInitials = (name) => {
+  const getInitials = (name: string) => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
 
-  const getColorByDay = (day) => {
-    const colors = {
+  const getColorByDay = (day: string) => {
+    const colors: Record<string, string> = {
       Monday: 'bg-blue-500',
       Tuesday: 'bg-green-500',
       Wednesday: 'bg-yellow-500',
@@ -72,7 +89,8 @@ export default function TeacherSchedule() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
-      <div className="max-w-7xl mx-auto">
+      <ToastContainer position="top-right" autoClose={3000} />
+     <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 mb-8">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
@@ -336,7 +354,6 @@ export default function TeacherSchedule() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
